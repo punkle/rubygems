@@ -167,15 +167,16 @@ module Gem
     attr_reader :error
 
     ##
-    # An English description of the error.
-
-    def wordy
-      "Unable to download data from #{@source.uri} - #{@error.message}"
-    end
-
-    ##
     # The "exception" alias allows you to call raise on a SourceFetchProblem.
 
     alias exception error
+
+    ##
+    # An English description of the error.
+
+    def wordy
+      @source.uri.password = 'REDACTED' unless @source.uri.password.nil?
+      "Unable to download data from #{@source.uri} - #{@error.message}"
+    end
   end
 end
